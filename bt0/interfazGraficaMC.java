@@ -1,4 +1,4 @@
-package java_swing;
+package bt0;
 
 
 import javax.swing.*;
@@ -47,7 +47,7 @@ public class interfazGraficaMC extends JFrame {
 
 
         // Etiqueta con imagen
-        JLabel etiquetaConImagen = new JLabel(new ImageIcon("mc/java_swing/start/fondo.jpg"));
+        JLabel etiquetaConImagen = new JLabel(new ImageIcon("mc/bt0/fondo.jpg"));
         panelIzquierda.add(etiquetaConImagen, BorderLayout.CENTER);
 
 
@@ -101,7 +101,13 @@ public class interfazGraficaMC extends JFrame {
         
         // Quitar el recuadro de "foco"
         boton.setFocusPainted(false);
-        
+
+        // Borde y Margen
+        boton.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.BLACK, 2), 
+            BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+
         // Cursor
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
