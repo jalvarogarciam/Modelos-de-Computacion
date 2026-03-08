@@ -19,13 +19,11 @@ public class randomGenerator {
      * @return vector de numeros pseudoaleatorios generados por el método lineal congruencial, normalizados a [0,1).
      */
     private double [] generator(long a, long m,long semilla, int n) {
-        double [] numeros = new double[n+1];
+        double [] numeros = new double[n];
 
-        numeros[0] = semilla;
+        for (int i = 0; i < n; i++) {
 
-        for (int i = 1; i <= n; i++) {
-
-            long mult = a * (long) numeros[i-1]; // para evitar overflow, 
+            long mult = i==0 ? a * semilla : a * (long) numeros[i-1]; // para evitar overflow, 
             numeros[i] = (double) (mult % m);
 
         }
@@ -93,7 +91,7 @@ public class randomGenerator {
         long m = 32362;
 
         // combinacion de los 3 subgeneradores.
-        for (int i = 0; i <= n; i++) {
+        for (int i = 1; i <= n; i++) {
 
             numeros[i] = (w[i]-x[i]+y[i]) % m ;
 
@@ -145,62 +143,13 @@ public class randomGenerator {
     
     public static void main(String[] args) {
         
-         randomGenerator generador = new randomGenerator();
-        int semilla = 1;
-        int tam = 10;
+        randomGenerator generador = new randomGenerator();
 
-        double[] numerosA = generador.generador26_1a(semilla, tam);
-        double[] numerosB = generador.generador26_1b(semilla, tam);
-        double[] numerosC = generador.generador26_2(semilla, tam);
-        double[] numerosD = generador.generador26_3(semilla, 10000);
-
-        System.out.println('\n');
-
-        System.out.println("Generador 26.1a:");
-        for (double num : numerosA) {
-            System.out.print(num + " ");
+        double [] valores = generador.generadorFishmanMoore(5, 4);
+        System.out.println("Valores generados: ");
+        for (double val : valores) {
+            System.out.println(val);
         }
-
-        System.out.println('\n');
-        System.out.println("\nGenerador 26.1b:");
-        for (double num : numerosB) {
-            System.out.print(num + " ");
-        }
-        
-        System.out.println('\n');
-        System.out.println("\nGenerador 26.2:");
-        for (double num : numerosC) {
-            System.out.print(num + " ");
-        }
-        
-        System.out.println('\n');
-        System.out.println("\nGenerador 26.3:");
-        System.out.println("termino 10000 numeros, el ultimo es: " + numerosD[numerosD.length - 1]);
-        System.out.println('\n');
-
-
-        long[] semillas = {1, 1, 1};
-        double[] numerosCombinados = generador.generadorCombinado(semillas, tam);
-        System.out.println("\nGenerador combinado:");
-        for (double num : numerosCombinados) {
-            System.out.print(num + " ");
-
-        }
-            System.out.println('\n');
-
-        double[] numerosFishmanMoore = generador.generadorFishmanMoore(semilla, tam);
-        System.out.println("\nGenerador Fishman-Moore:");
-        for (double num : numerosFishmanMoore) {
-            System.out.print(num + " ");        
-        }
-
-            System.out.println('\n');
-        double[] numerosRANDU = generador.generadorRANDU(semilla, tam);
-        System.out.println("\nGenerador RANDU:");
-        for (double num : numerosRANDU) {
-            System.out.print(num + " ");
-        }
-
-            System.out.println('\n');
     }
+        
 }
