@@ -207,12 +207,14 @@ class AutomataCelularGrafico extends JPanel {
 
         // CONFIGURACION INICIAL
         if (inicial.equals("ALEATORIA")) { // Configuración aleatoria
-        
+            
+            Random random = new Random();
             for (int a = 0; a < config.length; a++) {
-                config[a] = (int)(Math.random() * k); 
+                
+                config[a] = random.nextInt(k); 
             }
 
-        } else {  // Configuración con la célula central a 1 y el resto a 0
+        } else if (inicial.equals("CENTRAL")){  // Configuración con la célula central a 1 y el resto a 0
 
             for (int b = 0; b < config.length; b++) {
 
@@ -241,7 +243,7 @@ class AutomataCelularGrafico extends JPanel {
                 suma += config[(i - 1 + config.length) % config.length]; // izquierda
                 suma += config[(i + 1) % config.length];                 // derecha
 
-            } else { // Condición de frontera nula 
+            } else if (frontera.equals("NULA"))  { // Condición de frontera nula 
 
                 if (i > 0) suma += config[i - 1];                         // izquierda
                 if (i < config.length - 1) suma += config[i + 1];         // derecha
@@ -259,8 +261,6 @@ class AutomataCelularGrafico extends JPanel {
     /**
      * Inicia la simulación del autómata celular con los parámetros especificados.
      * @param generaciones El número de generaciones a simular.
-     * @return Una matriz 2D donde cada fila representa una generación del autómata celular y 
-     * cada columna representa el estado de una célula en esa generación.
      */
     public void computarSimulacion(int generaciones) {
     
@@ -290,7 +290,9 @@ class AutomataCelularGrafico extends JPanel {
        repaint();
     }
 
-
+    /**
+     * Se limpia la imagen
+     */
     public void reset() { imagen = null; repaint(); }
 
     @Override
@@ -302,7 +304,7 @@ class AutomataCelularGrafico extends JPanel {
     }
     
     /**
-     * Convierte un número de regla decimal a un array en base k.
+     * Convierte un número de regla decimal a un array en base k donde cada elemento es un dígito.
      * @param regla El número de la regla (ej. 792)
      * @param k El número de estados (ej. 3)
      * @return Array donde el índice es la suma de la vecindad y el valor es el nuevo estado.
@@ -334,7 +336,9 @@ class AutomataCelularGrafico extends JPanel {
         Color[] paleta = new Color[numEstados];
         paleta[0] = Color.BLACK; 
         for (int i = 1; i < numEstados; i++) {
+            //Tendremos tantos colores como estados, pero siempre abarcando todo el espectro
             float hue = (float) (i - 1) / (numEstados - 1);
+            
             paleta[i] = Color.getHSBColor(hue, 0.8f, 1f);
         }
         return paleta;
